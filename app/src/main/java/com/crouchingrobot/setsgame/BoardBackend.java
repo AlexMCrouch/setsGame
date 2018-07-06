@@ -66,7 +66,9 @@ public class BoardBackend {
         }
 
         boolean hitBot = false;
-        while (hitBot == false) {
+        int totalSets = 0;
+        while (hitBot == false && totalSets < 15) {
+            totalSets++;
             int color = rand.nextInt(5);
             int[] xMem = new int[3];
             int[] yMem = new int[3];

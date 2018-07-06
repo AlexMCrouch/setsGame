@@ -12,7 +12,7 @@ public class Board implements GameObject {
     private int leftPad = 30;
     private int rightPad = 30;
     private int topPad = 30;
-    private int bottomPad = 30;
+    private int bottomPad = 100;
     private int peicePadR = 5;
     private int peicePadL = 5;
     private int peicePadT = 5;
@@ -25,21 +25,22 @@ public class Board implements GameObject {
         this.screenWidth = screenWidth;
         this.screenHight = screenHight;
         this.peiceWidth = ((screenWidth-(rightPad+leftPad))/boardBack.getWidth()) - (peicePadR+peicePadL);
-        this.peiceHight = ((screenWidth - (bottomPad+topPad))/boardBack.getHight()) - (peicePadT+peicePadB);
+        this.peiceHight = ((screenHight - (bottomPad+topPad))/boardBack.getHight()) - (peicePadT+peicePadB);
     }
     @Override
     public void draw(Canvas canvas) {
         Paint peicePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Rect peiceSquare = new Rect();
-        int horShift = peicePadL+peiceWidth/2;
-        int verShift = peicePadT+peiceHight/2;
+        int horShift = peicePadL+peiceWidth;
+        int verShift = peicePadT+peiceHight;
         Point p = new Point();
         for(int i = 0; i < boardBack.getWidth(); i++){
             for(int j = 0; j < boardBack.getHight(); j++) {
-                p.set((leftPad + (horShift * (i + 1))), (topPad + (verShift * (j + 1))));
+                p.set((leftPad + (horShift * (i + 1)) - peiceWidth/2), (topPad + (verShift * (j + 1))));
                 peiceSquare.set(p.x - peiceWidth / 2, p.y - peiceHight / 2, p.x + peiceWidth / 2, p.y + peiceHight / 2);
                 peicePaint.setColor(boardBack.getSpotColor(i, j));
                 canvas.drawRect(peiceSquare,peicePaint);
+                System.out.println(p.x+"  "+p.y);
             }
         }
     }

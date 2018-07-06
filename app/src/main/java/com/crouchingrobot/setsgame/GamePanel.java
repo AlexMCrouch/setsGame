@@ -19,6 +19,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         boardBack = new BoardBackend(boardHight,boardWidth);
         boardFront = new Board(boardBack,context.getResources().getDisplayMetrics().widthPixels,
                 context.getResources().getDisplayMetrics().heightPixels);
+        System.out.println(context.getResources().getDisplayMetrics().widthPixels + "  " + context.getResources().getDisplayMetrics().heightPixels);
 
         getHolder().addCallback(this);
 
