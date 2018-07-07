@@ -2,6 +2,7 @@ package com.crouchingrobot.setsgame;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -12,6 +13,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Board boardFront;
     private final int boardHight = 12;
     private final int boardWidth = 5;
+
+    private boolean press = false;
+    private Point touchLocation = new Point(0,0);
+
 
     public GamePanel(Context context){
         super(context);
@@ -54,12 +59,25 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        return super.onTouchEvent(event);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_UP:
+                touchLocation.set((int)event.getX(),(int)event.getY());
+                press = false;
+                break;
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                touchLocation.set((int)event.getX(),(int)event.getY());
+                press = true;
+                break;
+        }
+        return true;
+        //return super.onTouchEvent(event);
     }
 
     public void update(){
-
+        boardFront.update(touchLocation,press);
     }
+
     @Override public void draw(Canvas canvas){
         super.draw(canvas);
         boardFront.draw(canvas);

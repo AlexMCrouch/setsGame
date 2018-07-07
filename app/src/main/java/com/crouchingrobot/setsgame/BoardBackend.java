@@ -67,9 +67,11 @@ public class BoardBackend {
 
         boolean hitBot = false;
         int totalSets = 0;
+        int color = rand.nextInt(5);
         while (hitBot == false && totalSets < 15) {
             totalSets++;
-            int color = rand.nextInt(5);
+            //int color = rand.nextInt(5);
+            color = (color+1)%5;
             int[] xMem = new int[3];
             int[] yMem = new int[3];
             for (int j = 0; j < 3; j++) {
@@ -144,9 +146,8 @@ public class BoardBackend {
                 temp = Color.rgb(120,120,0);
                 break;
             default:
-                temp = Color.rgb(0,0,0);
+                temp = Color.TRANSPARENT;
                 break;
-
         }
         return temp;
     }
