@@ -44,7 +44,7 @@ public class Board {
         if(touch){
             peicePaint.setColor(highlightColor);
             p.set((leftPad + (horShift * (selCol + 1)) - peiceWidth/2), 0);
-            peiceSquare.set(p.x - peiceWidth / 2, topPad, p.x + peiceWidth / 2, screenHight-bottomPad);
+            peiceSquare.set(p.x - peiceWidth / 2, topPad + peicePadT, p.x + peiceWidth / 2, screenHight-bottomPad);
             canvas.drawRect(peiceSquare,peicePaint);
         }
 
@@ -56,11 +56,11 @@ public class Board {
 
         for(int i = 0; i < boardBack.getWidth(); i++){
             for(int j = 0; j < boardBack.getHight(); j++) {
-                p.set((leftPad + (horShift * (i + 1)) - peiceWidth/2), (topPad + (verShift * (j + 1))));
+                p.set((leftPad + (horShift * (i + 1)) - peiceWidth/2), (topPad + (verShift * (j + 1))-peiceHight/2));
                 peiceSquare.set(p.x - peiceWidth / 2, p.y - peiceHight / 2, p.x + peiceWidth / 2, p.y + peiceHight / 2);
                 peicePaint.setColor(boardBack.getSpotColor(i, j));
                 canvas.drawRect(peiceSquare,peicePaint);
-                System.out.println(p.x+"  "+p.y);
+                //System.out.println(p.x+"  "+p.y);
             }
         }
     }
