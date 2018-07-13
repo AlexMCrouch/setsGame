@@ -20,7 +20,7 @@ public class Board {
     private int peicePadB = 5;
     private int peiceWidth = 0;
     private int peiceHight = 0;
-    private int selCol = 0;
+    private int selCol = -1;
     private boolean touch = false;
     private boolean wasTouch = false;
     private int highlightColor = Color.WHITE;
@@ -40,8 +40,8 @@ public class Board {
         int verShift = peicePadT+peiceHight;
         Point p = new Point();
 
-        //draw the highlighting first
-        if(touch){
+        //draw the highlighting first if touch and inside of board
+        if(touch && selCol != -1){
             peicePaint.setColor(highlightColor);
             p.set((leftPad + (horShift * (selCol + 1)) - peiceWidth/2), 0);
             peiceSquare.set(p.x - peiceWidth / 2, topPad + peicePadT, p.x + peiceWidth / 2, screenHight-bottomPad);
@@ -49,7 +49,7 @@ public class Board {
         }
 
         //If rising edge then remove a piece
-        if(wasTouch && !touch){
+        if(wasTouch && !touch && selCol != -1){
             boardBack.columnClickHandler(selCol);
         }
         wasTouch = touch;
@@ -67,6 +67,12 @@ public class Board {
 
     public void update(Point point, boolean press) {
         touch = press;
-        selCol = (point.x - leftPad)/(peiceWidth+peicePadR+peicePadL);
+        if(point.x < screenWidth-rightPad && point.x > leftPad && point.y > topPad && point.y < screenHight-bottomPad){
+            touch = press;
+            selCol = (point.x - leftPad)/(peiceWidth+peicePadR+peicePadL);
+        }else{
+            touch = false;
+            selCol = -1;
+        }
     }
 }

@@ -70,8 +70,8 @@ public class BoardBackend {
         int color = rand.nextInt(5);
         while (hitBot == false && totalSets < 13) {
             totalSets++;
-            //int color = rand.nextInt(5);
-            color = (color+1)%5;
+            color = rand.nextInt(5);
+            //color = (color+1)%5;
             int[] xMem = new int[3];
             int[] yMem = new int[3];
             for (int j = 0; j < 3; j++) {
@@ -125,6 +125,64 @@ public class BoardBackend {
                 }
             }
         }
+        System.out.println("Board Gen Attempt");
+        this.verifyBoard();
+    }
+
+    private void verifyBoard(){
+        int rCount = 0;
+        int gCount = 0;
+        int bCount = 0;
+        int yCount = 0;
+        int pCount = 0;
+        for(int i = 0; i<hight; i++){
+            for(int j = 0; j<width; j++){
+                switch (spotsInitial[j][i].getColor()){
+                    case 'P':
+                        pCount++;
+                        break;
+                    case 'B':
+                        bCount++;
+                        break;
+                    case 'R':
+                        rCount++;
+                        break;
+                    case 'G':
+                        gCount++;
+                        break;
+                    case 'Y':
+                        yCount++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        boolean goodBoard = true;
+        if(rCount%3 != 0){
+            System.out.println("Red Count Wrong" + rCount);
+            goodBoard = false;
+        }
+        if(gCount%3 != 0){
+            System.out.println("Green Count Wrong" + gCount);
+            goodBoard = false;
+        }
+        if(bCount%3 != 0){
+            System.out.println("Blue Count Wrong" + bCount);
+            goodBoard = false;
+        }
+        if(yCount%3 != 0){
+            System.out.println("Yellow Count Wrong" + yCount);
+            goodBoard = false;
+        }
+        if(pCount%3 != 0){
+            System.out.println("Purple Count Wrong" + pCount);
+            goodBoard = false;
+        }
+        if(!goodBoard){
+            this.generateAndFillBoard();
+        }
+
     }
 
     public int getSpotColor(int inX, int inY){
