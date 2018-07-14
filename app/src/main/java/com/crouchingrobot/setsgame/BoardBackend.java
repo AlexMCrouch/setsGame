@@ -209,6 +209,9 @@ public class BoardBackend {
             case 'Y':
                 temp = Color.rgb(255,255,0);
                 break;
+            case 'X':
+                temp = Color.BLACK;
+                break;
             default:
                 temp = Color.TRANSPARENT;
                 break;

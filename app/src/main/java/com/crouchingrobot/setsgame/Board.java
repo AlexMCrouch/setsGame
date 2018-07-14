@@ -37,6 +37,13 @@ public class Board {
     public void draw(Canvas canvas) {
         Paint peicePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Rect peiceSquare = new Rect();
+
+
+        //Paint the background of the board
+        peicePaint.setColor(Color.DKGRAY);
+        peiceSquare.set(leftPad,topPad,screenWidth-rightPad,screenHight-bottomPad);
+        canvas.drawRect(peiceSquare,peicePaint);
+
         int horShift = peicePadL+peiceWidth;
         int verShift = peicePadT+peiceHight;
         Point p = new Point();
