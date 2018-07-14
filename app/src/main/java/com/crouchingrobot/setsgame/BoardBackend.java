@@ -18,6 +18,8 @@ public class BoardBackend {
     //Point the furthest down square that exists
     private Spot[] columnHeads = null;
     private boolean boardClear = false;
+    public int streakCount = 0;
+    private int boardScore = 0;
 
     //Use this constructor to read in a file as the board
     public BoardBackend(InputStream inIS, int inHight, int inWidth) {
@@ -261,7 +263,9 @@ public class BoardBackend {
                 }
 
             }else{
+                //Board Fail Case
                 boardReset();
+                streakCount = 0;
             }
             Log.i("ColumnClick","current color = "+currentColor + "num in set = "+numInSet);
         }

@@ -13,13 +13,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Board boardFront;
     private final int boardHight = 12;
     private final int boardWidth = 5;
+    private Context context;
+    private int scoreCount = 0;
+    private int levelCount = 0;
 
     private boolean press = false;
     private Point touchLocation = new Point(0,0);
 
 
     public GamePanel(Context context){
-        super(context);
+         super(context);
+        this.context = context;
 
         boardBack = new BoardBackend(boardHight,boardWidth);
         boardFront = new Board(boardBack,context.getResources().getDisplayMetrics().widthPixels,
@@ -75,10 +79,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update(){
+
         boardFront.update(touchLocation,press);
+        if(boardBack.isClear()){
+            boardBack = new BoardBackend(boardHight,boardWidth);
+            boardFront = new Board(boardBack,context.getResources().getDisplayMetrics().widthPixels,
+                    context.getResources().getDisplayMetrics().heightPixels);
+        }
     }
 
     @Override public void draw(Canvas canvas){
+
         super.draw(canvas);
         boardFront.draw(canvas);
     }
