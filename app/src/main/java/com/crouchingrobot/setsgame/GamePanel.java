@@ -16,19 +16,31 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Context context;
     private int scoreCount = 0;
     private int levelCount = 0;
-
+    private SetTracker setTrack = null;
     private boolean press = false;
     private Point touchLocation = new Point(0,0);
+    private Point setBottomLeft = new Point(30,350);
+    private Point setTopRight = new Point(1400,300);
+    private Point timerCenter = null;
+    private int screenWidth = 0;
+    private int screenHight = 0;
 
 
     public GamePanel(Context context){
-         super(context);
+        super(context);
         this.context = context;
 
+        screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+        screenHight = context.getResources().getDisplayMetrics().heightPixels;
+        timerCenter = new Point(screenWidth/2, screenHight/20);
+
+
+
         boardBack = new BoardBackend(boardHight,boardWidth);
-        boardFront = new Board(boardBack,context.getResources().getDisplayMetrics().widthPixels,
-                context.getResources().getDisplayMetrics().heightPixels);
+        boardFront = new Board( boardBack,screenWidth,screenHight);
         System.out.println(context.getResources().getDisplayMetrics().widthPixels + "  " + context.getResources().getDisplayMetrics().heightPixels);
+
+        setTrack = new SetTracker(boardBack,setBottomLeft,setTopRight);
 
         getHolder().addCallback(this);
 
@@ -85,6 +97,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             boardBack = new BoardBackend(boardHight,boardWidth);
             boardFront = new Board(boardBack,context.getResources().getDisplayMetrics().widthPixels,
                     context.getResources().getDisplayMetrics().heightPixels);
+            setTrack = new SetTracker(boardBack,setBottomLeft,setTopRight);
         }
     }
 
@@ -92,6 +105,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         super.draw(canvas);
         boardFront.draw(canvas);
+        setTrack.draw(canvas);
     }
 
 }

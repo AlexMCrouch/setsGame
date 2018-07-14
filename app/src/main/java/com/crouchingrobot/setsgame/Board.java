@@ -12,7 +12,7 @@ public class Board {
     private int screenHight = 0;
     private int leftPad = 30;
     private int rightPad = 30;
-    private int topPad = 30;
+    private int topPad = 0;
     private int bottomPad = 100;
     private int peicePadR = 5;
     private int peicePadL = 5;
@@ -31,6 +31,7 @@ public class Board {
         this.screenHight = screenHight;
         this.peiceWidth = ((screenWidth-(rightPad+leftPad))/boardBack.getWidth()) - (peicePadR+peicePadL);
         this.peiceHight = ((screenHight - (bottomPad+topPad))/boardBack.getHight()) - (peicePadT+peicePadB);
+        topPad = screenHight/7;
     }
 
     public void draw(Canvas canvas) {

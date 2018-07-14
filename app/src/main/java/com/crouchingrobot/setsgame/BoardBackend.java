@@ -188,8 +188,12 @@ public class BoardBackend {
     }
 
     public int getSpotColor(int inX, int inY){
+        return convertColorCharToInt(spotsTemp[inX][inY].getColor());
+    }
+
+    private int convertColorCharToInt(char inColor){
         int temp = 0;
-        switch (spotsTemp[inX][inY].getColor()){
+        switch (inColor){
             case 'P':
                 temp = Color.rgb(120,0,120);
                 break;
@@ -281,5 +285,12 @@ public class BoardBackend {
         return boardClear;
     }
 
+    public int getSetColor(){
+        return convertColorCharToInt(currentColor);
+    }
+
+    public int getNumInSet(){
+        return numInSet;
+    }
 
 }
