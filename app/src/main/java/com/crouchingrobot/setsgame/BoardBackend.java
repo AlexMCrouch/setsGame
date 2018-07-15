@@ -79,7 +79,7 @@ public class BoardBackend {
             for (int j = 0; j < 3; j++) {
 
                 int index = rand.nextInt(5);
-                int row = 11;
+                int row = hight-1;
                 boolean stop = false;
                 while (!stop && randBoard[index][row] == 'X') {
                     row--;
@@ -87,7 +87,7 @@ public class BoardBackend {
                         stop = true;
                     }
                 }
-                if (row < 11) {
+                if (row < hight-1) {
                     switch (color) {
                         case 0:
                             randBoard[index][row + 1] = 'R';
@@ -210,8 +210,8 @@ public class BoardBackend {
                 temp = Color.rgb(255,255,0);
                 break;
             case 'X':
-                temp = Color.BLACK;
-                break;
+                //temp = Color.BLACK;
+                //break;
             default:
                 temp = Color.TRANSPARENT;
                 break;

@@ -13,7 +13,7 @@ public class Board {
     private int leftPad = 30;
     private int rightPad = 30;
     private int topPad = 0;
-    private int bottomPad = 100;
+    private int bottomPad = 600;
     private int peicePadR = 5;
     private int peicePadL = 5;
     private int peicePadT = 5;
@@ -37,22 +37,37 @@ public class Board {
     public void draw(Canvas canvas) {
         Paint peicePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Rect peiceSquare = new Rect();
-
-
-        //Paint the background of the board
-        peicePaint.setColor(Color.DKGRAY);
-        peiceSquare.set(leftPad,topPad,screenWidth-rightPad,screenHight-bottomPad);
-        canvas.drawRect(peiceSquare,peicePaint);
-
         int horShift = peicePadL+peiceWidth;
         int verShift = peicePadT+peiceHight;
         Point p = new Point();
+
+        //Paint the background of the board
+        peicePaint.setColor(Color.DKGRAY);
+        peiceSquare.set(leftPad,topPad,screenWidth-rightPad,screenHight);
+        canvas.drawRect(peiceSquare,peicePaint);
+        //Paint the column colors
+        peicePaint.setColor(Color.BLACK);
+        for(int i=0; i<boardBack.getWidth();i++){
+            p.set((leftPad + (horShift * (i + 1)) - peiceWidth/2), 0);
+            peiceSquare.set(p.x - peiceWidth / 2, topPad + peicePadT, p.x + peiceWidth / 2, screenHight);
+            canvas.drawRect(peiceSquare,peicePaint);
+        }
+
+//        for(int i = 0; i < boardBack.getWidth(); i++){
+//            for(int j = 0; j < boardBack.getHight(); j++) {
+//                p.set((leftPad + (horShift * (i + 1)) - peiceWidth/2), (topPad + (verShift * (j + 1))-peiceHight/2));
+//                peiceSquare.set(p.x - peiceWidth / 2, p.y - peiceHight / 2, p.x + peiceWidth / 2, p.y + peiceHight / 2);
+//
+//                canvas.drawRect(peiceSquare,peicePaint);
+//                //System.out.println(p.x+"  "+p.y);
+//            }
+//        }
 
         //draw the highlighting first if touch and inside of board
         if(touch && selCol != -1){
             peicePaint.setColor(highlightColor);
             p.set((leftPad + (horShift * (selCol + 1)) - peiceWidth/2), 0);
-            peiceSquare.set(p.x - peiceWidth / 2, topPad + peicePadT, p.x + peiceWidth / 2, screenHight-bottomPad);
+            peiceSquare.set(p.x - peiceWidth / 2, topPad + peicePadT, p.x + peiceWidth / 2, screenHight);
             canvas.drawRect(peiceSquare,peicePaint);
         }
 
@@ -75,7 +90,10 @@ public class Board {
 
     public void update(Point point, boolean press) {
         touch = press;
-        if(point.x < screenWidth-rightPad && point.x > leftPad && point.y > topPad && point.y < screenHight-bottomPad){
+        if(point.x < screenWidth-rightPad &&
+                point.x > leftPad && point.y > topPad
+                //&& point.y < screenHight-bottomPad       --check if touch is above bottom pad, uncomment if this is wanted again
+                ){
             touch = press;
             selCol = (point.x - leftPad)/(peiceWidth+peicePadR+peicePadL);
         }else{

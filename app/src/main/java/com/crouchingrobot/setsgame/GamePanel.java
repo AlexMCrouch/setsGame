@@ -11,7 +11,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private BoardBackend boardBack;
     private Board boardFront;
-    private final int boardHight = 12;
+    private final int boardHight = 11;
     private final int boardWidth = 5;
     private Context context;
     private int scoreCount = 0;
@@ -24,7 +24,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Point timerCenter = null;
     private int screenWidth = 0;
     private int screenHight = 0;
+    private GameTimer gTime = null;
+    private boolean gameOver = false;
 
+    private final int startTimeAmount = 45; //number of seconds to start the timer with
+    private final int boardClearAditionalTime = 15; //amount of time to add after a board clear
 
     public GamePanel(Context context){
         super(context);
@@ -32,7 +36,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         screenWidth = context.getResources().getDisplayMetrics().widthPixels;
         screenHight = context.getResources().getDisplayMetrics().heightPixels;
-        timerCenter = new Point(screenWidth/2, screenHight/20);
+        timerCenter = new Point(screenWidth/2, screenHight/15);
 
 
 
@@ -47,6 +51,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         thread = new MainThread(getHolder(), this);
 
         setFocusable(true);
+
+        gTime = new GameTimer(startTimeAmount, timerCenter);
     }
 
     @Override
@@ -98,6 +104,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             boardFront = new Board(boardBack,context.getResources().getDisplayMetrics().widthPixels,
                     context.getResources().getDisplayMetrics().heightPixels);
             setTrack = new SetTracker(boardBack,setBottomLeft,setTopRight);
+            gTime.addTime(boardClearAditionalTime);
+        }
+        gTime.update();
+        if(gTime.up()){
+            gameOver = true;
         }
     }
 
@@ -106,6 +117,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         boardFront.draw(canvas);
         setTrack.draw(canvas);
+        gTime.draw(canvas);
     }
 
 }
