@@ -40,10 +40,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         timerCenter = new Point(screenWidth/2, screenHight/19);
         scoreCenter = new Point(screenWidth/2,(screenHight/19) * 2);
-        streakCenter = new Point(screenWidth/100 * 85, (screenHight/19) * 2);
+        streakCenter = new Point(screenWidth/100 * 85, (screenHight/80) * 4);
 
         gTime = new GameTimer(startTimeAmount, timerCenter, screenHight/17);
-        gScore = new ScoreCounter(scoreCenter,streakCenter, screenHight/19,screenHight/19);
+        gScore = new ScoreCounter(scoreCenter,streakCenter, screenHight/23,screenHight/23);
 
         boardBack = new BoardBackend(boardHight,boardWidth, gScore);
         boardFront = new Board( boardBack,screenWidth,screenHight);

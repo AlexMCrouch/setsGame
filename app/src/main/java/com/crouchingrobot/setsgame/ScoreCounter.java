@@ -35,8 +35,10 @@ public class ScoreCounter implements GameObject {
 
         timerPaint.setTextSize(streakTextSize);
         String streakOut = "x" + currentStreak;
+        streakCenter.set(streakCenter.x,streakCenter.y+(streakTextSize/2) + (streakTextSize/2));
         drawCenter(canvas,timerPaint,streakOut,streakCenter);
-
+        streakCenter.set(streakCenter.x,streakCenter.y-(streakTextSize/2) - (streakTextSize/2));
+        drawCenter(canvas,timerPaint,"Streak",streakCenter);
     }
 
     private void drawCenter(Canvas canvas, Paint paint, String text, Point p) {
