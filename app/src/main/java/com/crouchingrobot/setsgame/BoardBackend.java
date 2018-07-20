@@ -20,14 +20,17 @@ public class BoardBackend {
     private boolean boardClear = false;
     public int streakCount = 0;
     private int boardScore = 0;
+    private ScoreCounter gScore = null;
 
     //Use this constructor to read in a file as the board
-    public BoardBackend(InputStream inIS, int inHight, int inWidth) {
+    public BoardBackend(InputStream inIS, int inHight, int inWidth, ScoreCounter gScore) {
         hight = inHight;
         width = inWidth;
         spotsInitial = new Spot[width][hight];
         spotsTemp = new Spot[width][hight];
         columnHeads = new Spot[width];
+
+        this.gScore = gScore;
 
         Scanner inFile = new Scanner(inIS);
         //Read in the spaces from the file
@@ -46,12 +49,14 @@ public class BoardBackend {
     }
 
     //Use this constructor to generate a random game on the fly
-    public BoardBackend(int inHight, int inWidth) {
+    public BoardBackend(int inHight, int inWidth, ScoreCounter gScore) {
         hight = inHight;
         width = inWidth;
         spotsInitial = new Spot[width][hight];
         spotsTemp = new Spot[width][hight];
         columnHeads = new Spot[width];
+
+        this.gScore = gScore;
 
         generateAndFillBoard();
 
@@ -249,6 +254,7 @@ public class BoardBackend {
                 //set is starting so loss is not possible
                 currentColor=columnHeads[column].getColor();
                 numInSet++;
+                gScore.addPoints(1);
                 //set the peice at the head of the column to X and set the columnHead to the parent
                 columnHeads[column]=columnHeads[column].removePeice();
             }else if(columnHeads[column].getColor() == currentColor) {
@@ -263,16 +269,18 @@ public class BoardBackend {
                             boardClear = false;
                         }
                     }
+                    gScore.addPoints(5);
                 }else{
                     numInSet++;
                     //set the peice at the head of the column to X and set the columnHead to the parent
                     columnHeads[column]=columnHeads[column].removePeice();
+                    gScore.addPoints(1);
                 }
-
             }else{
                 //Board Fail Case
                 boardReset();
                 streakCount = 0;
+                gScore.streakEnd();
             }
             Log.i("ColumnClick","current color = "+currentColor + "num in set = "+numInSet);
         }

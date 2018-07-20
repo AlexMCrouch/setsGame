@@ -31,7 +31,7 @@ public class Board {
         this.screenHight = screenHight;
         this.peiceWidth = ((screenWidth-(rightPad+leftPad))/boardBack.getWidth()) - (peicePadR+peicePadL);
         this.peiceHight = ((screenHight - (bottomPad+topPad))/boardBack.getHight()) - (peicePadT+peicePadB);
-        topPad = screenHight/7;
+        topPad = (screenHight/20)*3;
     }
 
     public void draw(Canvas canvas) {

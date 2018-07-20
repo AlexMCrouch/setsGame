@@ -14,17 +14,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private final int boardHight = 11;
     private final int boardWidth = 5;
     private Context context;
-    private int scoreCount = 0;
-    private int levelCount = 0;
     private SetTracker setTrack = null;
     private boolean press = false;
     private Point touchLocation = new Point(0,0);
     private Point setBottomLeft = new Point(30,350);
     private Point setTopRight = new Point(1400,300);
     private Point timerCenter = null;
+    private Point scoreCenter = null;
+    private Point streakCenter = null;
     private int screenWidth = 0;
     private int screenHight = 0;
     private GameTimer gTime = null;
+    private ScoreCounter gScore = null;
     private boolean gameOver = false;
 
     private final int startTimeAmount = 45; //number of seconds to start the timer with
@@ -36,14 +37,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         screenWidth = context.getResources().getDisplayMetrics().widthPixels;
         screenHight = context.getResources().getDisplayMetrics().heightPixels;
-        timerCenter = new Point(screenWidth/2, screenHight/15);
 
+        timerCenter = new Point(screenWidth/2, screenHight/19);
+        scoreCenter = new Point(screenWidth/2,(screenHight/19) * 2);
+        streakCenter = new Point(screenWidth/100 * 85, (screenHight/19) * 2);
 
+        gTime = new GameTimer(startTimeAmount, timerCenter, screenHight/17);
+        gScore = new ScoreCounter(scoreCenter,streakCenter, screenHight/19,screenHight/19);
 
-        boardBack = new BoardBackend(boardHight,boardWidth);
+        boardBack = new BoardBackend(boardHight,boardWidth, gScore);
         boardFront = new Board( boardBack,screenWidth,screenHight);
         System.out.println(context.getResources().getDisplayMetrics().widthPixels + "  " + context.getResources().getDisplayMetrics().heightPixels);
 
+        setBottomLeft.set((screenWidth/200)*7,(screenHight/100)*15);
+        setTopRight.set((screenWidth/200)*196,(screenHight/100)*13);
         setTrack = new SetTracker(boardBack,setBottomLeft,setTopRight);
 
         getHolder().addCallback(this);
@@ -51,8 +58,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         thread = new MainThread(getHolder(), this);
 
         setFocusable(true);
-
-        gTime = new GameTimer(startTimeAmount, timerCenter);
     }
 
     @Override
@@ -100,11 +105,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         boardFront.update(touchLocation,press);
         if(boardBack.isClear()){
-            boardBack = new BoardBackend(boardHight,boardWidth);
+            boardBack = new BoardBackend(boardHight,boardWidth, gScore);
             boardFront = new Board(boardBack,context.getResources().getDisplayMetrics().widthPixels,
                     context.getResources().getDisplayMetrics().heightPixels);
             setTrack = new SetTracker(boardBack,setBottomLeft,setTopRight);
             gTime.addTime(boardClearAditionalTime);
+            gScore.streakInc();
         }
         gTime.update();
         if(gTime.up()){
@@ -118,6 +124,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         boardFront.draw(canvas);
         setTrack.draw(canvas);
         gTime.draw(canvas);
+        gScore.draw(canvas);
     }
 
 }
