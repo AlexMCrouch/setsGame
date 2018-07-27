@@ -11,6 +11,7 @@ public class SceneManager {
 
     public SceneManager(){
         ACTIVE_SCENE = 0;
+
         scenes.add(new GameplayScene());
     }
 
