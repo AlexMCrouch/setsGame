@@ -6,13 +6,14 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 public class SceneManager {
-    private ArrayList<Scene> scenes = new ArrayList();
+    private static ArrayList<Scene> scenes = new ArrayList();
     public static int ACTIVE_SCENE;
 
     public SceneManager(){
         ACTIVE_SCENE = 0;
-
+        scenes.add(new MainMenuScene());
         scenes.add(new GameplayScene());
+        scenes.add(new JustLostScene());
     }
 
     public void recieveTouch(MotionEvent event){
@@ -26,4 +27,10 @@ public class SceneManager {
     public void draw(Canvas canvas){
         scenes.get(ACTIVE_SCENE).draw(canvas);
     }
+
+    public static void newGame(){
+        scenes.remove(1);
+        scenes.add(1,new GameplayScene());
+    }
+
 }
