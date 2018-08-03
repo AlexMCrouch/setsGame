@@ -31,25 +31,14 @@ public class ScoreCounter implements GameObject {
         timerPaint.setColor(Color.WHITE);
         timerPaint.setTextSize(scoreTextSize);
         String scoreOut = "Score: " + currentScore + "";
-        drawCenter(canvas, timerPaint,scoreOut, scoreCenter);
+        MyDraw.drawCenter(canvas, timerPaint,scoreOut, scoreCenter);
 
         timerPaint.setTextSize(streakTextSize);
         String streakOut = "x" + currentStreak;
         streakCenter.set(streakCenter.x,streakCenter.y+(streakTextSize/2) + (streakTextSize/2));
-        drawCenter(canvas,timerPaint,streakOut,streakCenter);
+        MyDraw.drawCenter(canvas,timerPaint,streakOut,streakCenter);
         streakCenter.set(streakCenter.x,streakCenter.y-(streakTextSize/2) - (streakTextSize/2));
-        drawCenter(canvas,timerPaint,"Streak",streakCenter);
-    }
-
-    private void drawCenter(Canvas canvas, Paint paint, String text, Point p) {
-        canvas.getClipBounds(r);
-        int cHeight = r.height();
-        int cWidth = r.width();
-        paint.setTextAlign(Paint.Align.LEFT);
-        paint.getTextBounds(text, 0, text.length(), r);
-        float x = p.x - r.width() / 2f - r.left;
-        float y = p.y + r.height() / 2f - r.bottom;
-        canvas.drawText(text, x, y, paint);
+        MyDraw.drawCenter(canvas,timerPaint,"Streak",streakCenter);
     }
 
     @Override

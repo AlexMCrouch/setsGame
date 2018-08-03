@@ -12,7 +12,6 @@ public class GameTimer implements GameObject {
     private long startTime;
     private long timeElapsed;
     private long timerLength;
-    private Rect r = new Rect();
     private int textSize = 0;
 
     //Pass in timer length in seconds
@@ -32,18 +31,7 @@ public class GameTimer implements GameObject {
         //canvas.drawText(timeOut,(float)center.x,
         //        (float)center.y- ((timerPaint.descent() + timerPaint.ascent()) / 2),
         //        timerPaint);
-        drawCenter(canvas, timerPaint,timeOut);
-    }
-
-    private void drawCenter(Canvas canvas, Paint paint, String text) {
-        canvas.getClipBounds(r);
-        int cHeight = r.height();
-        int cWidth = r.width();
-        paint.setTextAlign(Paint.Align.LEFT);
-        paint.getTextBounds(text, 0, text.length(), r);
-        float x = cWidth / 2f - r.width() / 2f - r.left;
-        float y = center.y + r.height() / 2f - r.bottom;
-        canvas.drawText(text, x, y, paint);
+        MyDraw.drawCenter(canvas, timerPaint,timeOut,center);
     }
 
     @Override

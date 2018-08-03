@@ -12,7 +12,7 @@ public class SceneManager {
     public SceneManager(){
         ACTIVE_SCENE = 0;
         scenes.add(new MainMenuScene());
-        scenes.add(new GameplayScene());
+        scenes.add(null);
         scenes.add(new JustLostScene());
     }
 

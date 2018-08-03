@@ -188,6 +188,9 @@ public class BoardBackend {
         }
         if(!goodBoard){
             this.generateAndFillBoard();
+        } else if(spotsInitial[0][0].getColor() == 'X'){
+            System.out.println("IT DID THE BAD THING WITH THE BOTTOM CORNER");
+            this.generateAndFillBoard();
         }
 
     }

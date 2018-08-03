@@ -35,8 +35,14 @@ public class JustLostScene implements Scene {
     public void draw(Canvas canvas) {
         Rect fullScreenRec = new Rect(0,0,GamePanel.SCREEN_WIDTH,GamePanel.SCREEN_HIGHT);
         Paint paintBack = new Paint();
-        paintBack.setColor(Color.BLUE);
+        paintBack.setColor(Color.BLACK);
         canvas.drawRect(fullScreenRec,paintBack);
+
+
+        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(200);
+        MyDraw.drawCenter(canvas,textPaint,"DO BETTER", new Point(GamePanel.SCREEN_WIDTH/2,GamePanel.SCREEN_HIGHT/2));
     }
 
     @Override
