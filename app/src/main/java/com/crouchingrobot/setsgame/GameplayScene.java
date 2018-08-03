@@ -20,8 +20,8 @@ public class GameplayScene implements Scene {
     private GameTimer gTime = null;
     private ScoreCounter gScore = null;
     private boolean gameOver = false;
-    private final int startTimeAmount = 45; //number of seconds to start the timer with
-    private final int boardClearAditionalTime = 15; //amount of time to add after a board clear
+    private final int startTimeAmount = 35; //number of seconds to start the timer with
+    private final int boardClearAditionalTime = 12; //amount of time to add after a board clear
     private int screenWidth = 0;
     private int screenHight = 0;
 

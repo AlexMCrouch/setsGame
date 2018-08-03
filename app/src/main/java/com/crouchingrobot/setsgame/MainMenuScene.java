@@ -22,6 +22,7 @@ public class MainMenuScene implements Scene {
         if(pressDelay == true && press == false){
             SceneManager.newGame();
             SceneManager.ACTIVE_SCENE = 1;
+
         }
         pressDelay = press;
     }

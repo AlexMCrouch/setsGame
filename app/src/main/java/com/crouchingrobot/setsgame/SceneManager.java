@@ -2,6 +2,7 @@ package com.crouchingrobot.setsgame;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class SceneManager {
 
     public void update(){
         scenes.get(ACTIVE_SCENE).update();
+
     }
 
     public void draw(Canvas canvas){

@@ -6,25 +6,20 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.RelativeLayout;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     public static int SCREEN_WIDTH = 0;
     public static int SCREEN_HIGHT = 0;
-
     private SceneManager manager = null;
-
-    public GamePanel(Context context){
+    public GamePanel(Context context, SceneManager manager){
         super(context);
-
-
+        this.manager = manager;
         SCREEN_WIDTH = this.getResources().getDisplayMetrics().widthPixels;
         SCREEN_HIGHT = this.getResources().getDisplayMetrics().heightPixels;
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(), this);
-
-        manager = new SceneManager();
-
         setFocusable(true);
     }
 
@@ -61,6 +56,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update(){
         manager.update();
+
     }
 
     @Override public void draw(Canvas canvas){
