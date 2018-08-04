@@ -19,9 +19,13 @@ public class MainActivity extends Activity {
     public RelativeLayout layout;
     private SceneManager manager = null;
 
+    protected MyApplication nMyApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        nMyApplication = (MyApplication) getApplication();
+        nMyApplication.onActivityCreated(this, savedInstanceState);
         //This is my Ad ID so use this for publishing
         MobileAds.initialize(this, "ca-app-pub-3501821828458096~4941816590");
 
@@ -36,13 +40,10 @@ public class MainActivity extends Activity {
         // Add the AdView to the view hierarchy. The view will have no size
         // until the ad is loaded.
         final RelativeLayout layout = new RelativeLayout(this);
-        layout.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,    WindowManager.LayoutParams.MATCH_PARENT));
+        layout.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
         // Create an ad request.
         // get test ads on a physical device.
         final AdRequest adRequest = new AdRequest.Builder().build();
-
-
-
 
 
         //define ad view parameters
@@ -53,41 +54,74 @@ public class MainActivity extends Activity {
         adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
 
-
         manager = new SceneManager();
         //Create game view
-        View gameView = new GamePanel(this,manager);
+        View gameView = new GamePanel(this, manager);
 
         layout.addView(gameView);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(layout);
 
         final Handler handler = new Handler();
-        Runnable r = new Runnable() {
-            private int lastScene = 0;
-            public void run() {
-                if(SceneManager.ACTIVE_SCENE == 1){
-                    if(lastScene != 1){
-                        adView.setVisibility(View.INVISIBLE);
-                        // Start loading the ad in the background.
-                        adView.loadAd(adRequest);
-                        layout.removeView(adView);
-                    }
-                }else{
-                    if(lastScene == 1){
-                        adView.setVisibility(View.VISIBLE);
-                        layout.addView(adView, adParams);
-                    }
-                }
-                handler.postDelayed(this, 100);
-                lastScene = SceneManager.ACTIVE_SCENE;
-            }
-        };
+        Runnable r = new MyRunnable(adRequest, layout, adView, adParams, handler);
         handler.postDelayed(r, 100);
+/*
+
+        HomeWatcher mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                MainThread.onPause();
+            }
+            @Override
+            public void onHomeLongPressed() {
+                MainThread.onPause();
+            }
+        });
+        mHomeWatcher.startWatch();
+*/
+    }
+
+
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        nMyApplication.onActivityResumed(this);
+        super.onResume();
 
     }
 
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        nMyApplication.onActivityPaused(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        nMyApplication.onActivityDestroyed(this);
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        nMyApplication.onActivityStarted(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        nMyApplication.onActivityStopped(this);
+        super.onStop();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        nMyApplication.onActivitySaveInstanceState(this, outState);
+        super.onSaveInstanceState(outState);
+    }
 }

@@ -20,11 +20,19 @@ public class MainThread extends Thread {
         this.running = running;
     }
 
+    private static Object mPauseLock;
+    private static boolean mPaused;
+    private static boolean mFinished;
+
     public MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel){
         super();
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
         //this.mode = mode;
+
+        mPauseLock = new Object();
+        mPaused = false;
+        mFinished = false;
     }
 
     @Override
@@ -33,7 +41,19 @@ public class MainThread extends Thread {
         long waitTime;
         int frameCount = 0;
         long totalTime = 0;
+
+
         while (running) {
+
+            synchronized (mPauseLock) {
+                while (mPaused) {
+                    try {
+                        mPauseLock.wait();
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+
             if(SceneManager.ACTIVE_SCENE == 1){
                 MAX_FPS = 30;
             }
@@ -83,4 +103,24 @@ public class MainThread extends Thread {
              }
          }
      }
+
+
+    /**
+     * Call this on pause.
+     */
+    public static void onPause() {
+        synchronized (mPauseLock) {
+            mPaused = true;
+        }
+    }
+
+    /**
+     * Call this on resume.
+     */
+    public static void onResume() {
+        synchronized (mPauseLock) {
+            mPaused = false;
+            mPauseLock.notifyAll();
+        }
+    }
 }
