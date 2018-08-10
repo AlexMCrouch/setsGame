@@ -3,6 +3,8 @@ package com.crouchingrobot.setsgame;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+import com.google.android.gms.ads.AdRequest;
+
 public class MainThread extends Thread {
     public static int MAX_FPS = 30;
     private double averageFPS;
@@ -33,6 +35,7 @@ public class MainThread extends Thread {
         long waitTime;
         int frameCount = 0;
         long totalTime = 0;
+        boolean interAdLoading = false;
         while (running) {
             if(SceneManager.ACTIVE_SCENE == 1){
                 MAX_FPS = 30;

@@ -7,6 +7,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import com.google.android.gms.ads.AdRequest;
+
 public class JustLostScene implements Scene {
 
     Point touchLocation = new Point();
@@ -24,6 +26,7 @@ public class JustLostScene implements Scene {
             SceneManager.newGame();
         }
         pressDelay = press;
+
     }
 
     @Override

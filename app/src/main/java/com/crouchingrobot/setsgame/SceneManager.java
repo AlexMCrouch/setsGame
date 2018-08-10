@@ -9,9 +9,10 @@ import java.util.ArrayList;
 public class SceneManager {
     private static ArrayList<Scene> scenes = new ArrayList();
     public static int ACTIVE_SCENE;
-
+    public static int LAST_SCENE;
     public SceneManager(){
         ACTIVE_SCENE = 0;
+        LAST_SCENE = 0;
         scenes.add(new MainMenuScene());
         scenes.add(null);
         scenes.add(new JustLostScene());
@@ -23,7 +24,7 @@ public class SceneManager {
 
     public void update(){
         scenes.get(ACTIVE_SCENE).update();
-
+        LAST_SCENE = ACTIVE_SCENE;
     }
 
     public void draw(Canvas canvas){
