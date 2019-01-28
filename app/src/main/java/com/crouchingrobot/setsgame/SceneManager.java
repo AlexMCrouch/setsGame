@@ -7,15 +7,13 @@ import android.view.View;
 import java.util.ArrayList;
 
 public class SceneManager {
-    private static ArrayList<Scene> scenes = new ArrayList();
+    public static ArrayList<Scene> scenes = new ArrayList();
     public static int ACTIVE_SCENE;
     public static int LAST_SCENE;
     public SceneManager(){
         ACTIVE_SCENE = 0;
         LAST_SCENE = 0;
-        scenes.add(new MainMenuScene());
-        scenes.add(null);
-        scenes.add(new JustLostScene());
+
     }
 
     public void recieveTouch(MotionEvent event){
@@ -23,6 +21,9 @@ public class SceneManager {
     }
 
     public void update(){
+        if(scenes.get(1)!=null){
+            ((JustLostScene)scenes.get(2)).gHscore.updateHS(((GameplayScene)scenes.get(1)).gScore.getScore());
+        }
         scenes.get(ACTIVE_SCENE).update();
         LAST_SCENE = ACTIVE_SCENE;
     }
@@ -34,6 +35,12 @@ public class SceneManager {
     public static void newGame(){
         scenes.remove(1);
         scenes.add(1,new GameplayScene());
+    }
+
+    public void createScenes(){
+        scenes.add(new MainMenuScene());
+        scenes.add(null);
+        scenes.add(new JustLostScene());
     }
 
 }

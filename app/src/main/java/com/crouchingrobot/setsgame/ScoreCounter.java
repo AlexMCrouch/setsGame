@@ -18,7 +18,7 @@ public class ScoreCounter implements GameObject {
     private int streakTextSize = 0;
 
     //Pass in timer length in seconds
-    public ScoreCounter(Point scoreCenter, Point streakCenter, int scoreTextSize, int streakTextSize){
+    public ScoreCounter(Point scoreCenter, Point streakCenter, int scoreTextSize, int streakTextSize) {
         this.scoreCenter = scoreCenter;
         this.scoreTextSize = scoreTextSize;
         this.streakCenter = streakCenter;
@@ -31,14 +31,14 @@ public class ScoreCounter implements GameObject {
         timerPaint.setColor(Color.WHITE);
         timerPaint.setTextSize(scoreTextSize);
         String scoreOut = "Score: " + currentScore + "";
-        MyDraw.drawCenter(canvas, timerPaint,scoreOut, scoreCenter);
+        MyDraw.drawCenter(canvas, timerPaint, scoreOut, scoreCenter);
 
         timerPaint.setTextSize(streakTextSize);
         String streakOut = "x" + currentStreak;
-        streakCenter.set(streakCenter.x,streakCenter.y+(streakTextSize/2) + (streakTextSize/2));
-        MyDraw.drawCenter(canvas,timerPaint,streakOut,streakCenter);
-        streakCenter.set(streakCenter.x,streakCenter.y-(streakTextSize/2) - (streakTextSize/2));
-        MyDraw.drawCenter(canvas,timerPaint,"Streak",streakCenter);
+        streakCenter.set(streakCenter.x, streakCenter.y + (streakTextSize / 2) + (streakTextSize / 2));
+        MyDraw.drawCenter(canvas, timerPaint, streakOut, streakCenter);
+        streakCenter.set(streakCenter.x, streakCenter.y - (streakTextSize / 2) - (streakTextSize / 2));
+        MyDraw.drawCenter(canvas, timerPaint, "Streak", streakCenter);
     }
 
     @Override
@@ -46,31 +46,32 @@ public class ScoreCounter implements GameObject {
 
     }
 
-    public void addPoints(int scoreToAdd){
+    public void addPoints(int scoreToAdd) {
         currentScore += (scoreToAdd * currentStreak);
     }
 
-    public int getScore(){
+    public int getScore() {
         return currentScore;
     }
 
-    public void streakInc(){
+    public void streakInc() {
         currentStreak++;
     }
 
-    public void streakEnd(){
-        if(maxStreak<currentStreak){
+    public void streakEnd() {
+        if (maxStreak < currentStreak) {
             maxStreak = currentStreak;
         }
         lastStreak = currentStreak;
         currentStreak = 1;
     }
 
-    public void setToMax(){
+    public void setToMax() {
         currentStreak = maxStreak;
     }
 
-    public void setToLast(){
+    public void setToLast() {
         currentStreak = lastStreak;
     }
+
 }

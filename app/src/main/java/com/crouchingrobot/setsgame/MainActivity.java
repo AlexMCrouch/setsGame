@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //This is my Ad ID so use this for publishing
-        MobileAds.initialize(this, "ca-app-pub-3501821828458096~4941816590");
+        //MobileAds.initialize(this, "ca-app-pub-3501821828458096~4941816590");
 
         //Create the banner ad
         final AdView adView = new AdView(this);
@@ -35,12 +35,12 @@ public class MainActivity extends Activity {
         //This is the real Ad ID so use this for publishing
         //adView.setAdUnitId("ca-app-pub-3501821828458096/3702980440");
 
-        //Create the interstatial ad
-        mInterstitialAd = new InterstitialAd(this);
-        //Test ad ID
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        //Real ad ID
-        //mInterstitialAd.setAdUnitId("ca-app-pub-3501821828458096/4826212622");
+//        //Create the interstatial ad
+//        mInterstitialAd = new InterstitialAd(this);
+//        //Test ad ID
+//        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+//        //Real ad ID
+//        //mInterstitialAd.setAdUnitId("ca-app-pub-3501821828458096/4826212622");
 
 
         // Add the AdView to the view hierarchy. The view will have no size
@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
         manager = new SceneManager();
         //Create game view
         View gameView = new GamePanel(this,manager);
+        manager.createScenes();
 
         layout.addView(gameView);
 
@@ -92,29 +93,31 @@ public class MainActivity extends Activity {
                     if(lastScene == 1){
 
 
-                        if (mInterstitialAd.isLoaded()) {
-                            mInterstitialAd.show();
-                            interAdLoading = false;
-                            System.out.println("Trying to show");
-                        }else{
-                            if(!interAdLoading){
-                                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                                interAdLoading = true;
-                                System.out.println("starting loading");
+//                        if (mInterstitialAd.isLoaded()) {
+//                            mInterstitialAd.show();
+//                            interAdLoading = false;
+//                            System.out.println("Trying to show");
+//                        }else{
+//                            if(!interAdLoading){
+//                                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+//                                interAdLoading = true;
+//                                System.out.println("starting loading");
 
                                 //display banner ad since interstatal is not ready
                                 adView.setVisibility(View.VISIBLE);
                                 layout.addView(adView, adParams);
 
 
-                            }
-                        }
+//                            }
+                        //}
                     }
                 }
                 handler.postDelayed(this, 100);
                 lastScene = SceneManager.ACTIVE_SCENE;
             }
         };
+
+        ((JustLostScene)manager.scenes.get(2)).gHscore.readHighScore(this);
         handler.postDelayed(r, 100);
 
     }
@@ -122,6 +125,7 @@ public class MainActivity extends Activity {
 
     protected void onResume() {
         // TODO Auto-generated method stub
+        System.out.println("Resume");
         super.onResume();
 
     }
@@ -129,30 +133,46 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub
+        System.out.println("onPause");
+        writeHighScore();
+        System.exit(0);
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
+        System.out.println("onDestroy");
         super.onDestroy();
     }
 
     @Override
     protected void onStart() {
+
+        System.out.println("onStart");
         super.onStart();
     }
 
     @Override
     protected void onStop() {
+
+        System.out.println("onStop");
         super.onStop();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        System.out.println("outState");
+        writeHighScore();
         super.onSaveInstanceState(outState);
-
         System.exit(0);
+    }
+
+    void writeHighScore(){
+
+        if(manager.scenes.get(2)!= null){
+            ((JustLostScene)manager.scenes.get(2)).gHscore.writeHighScore(this);
+        }
     }
 }
 

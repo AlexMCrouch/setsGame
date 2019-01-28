@@ -18,16 +18,16 @@ public class GameplayScene implements Scene {
     private Point scoreCenter = null;
     private Point streakCenter = null;
     private GameTimer gTime = null;
-    private ScoreCounter gScore = null;
+    public ScoreCounter gScore = null;
     private boolean gameOver = false;
-    private final int startTimeAmount = 35; //number of seconds to start the timer with
+    private final int startTimeAmount = 5; //number of seconds to start the timer with  //was using 35
     private final int boardClearAditionalTime = 12; //amount of time to add after a board clear
+
     private int screenWidth = 0;
     private int screenHight = 0;
 
 
     public GameplayScene(){
-
         this.screenWidth = GamePanel.SCREEN_WIDTH;
         this.screenHight = GamePanel.SCREEN_HIGHT;
 
@@ -37,6 +37,7 @@ public class GameplayScene implements Scene {
 
         gTime = new GameTimer(startTimeAmount, timerCenter, screenHight/17);
         gScore = new ScoreCounter(scoreCenter,streakCenter, screenHight/23,screenHight/23);
+
 
         boardBack = new BoardBackend(boardHight,boardWidth, gScore);
         boardFront = new Board( boardBack,screenWidth,screenHight);
