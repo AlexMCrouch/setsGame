@@ -1,6 +1,7 @@
 package com.crouchingrobot.setsgame;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -30,11 +31,8 @@ public class HighScore implements GameObject {
         Paint timerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         timerPaint.setColor(Color.WHITE);
         timerPaint.setTextSize(scoreTextSize);
-//        timerPaint.setTextSize(200);
         String scoreOut = "High Score: " + highscore + "";
-        //MyDraw.drawCenter(canvas, timerPaint, scoreOut, scoreCenter);
-        Point tempPoint = new Point(700,500);
-        MyDraw.drawCenter(canvas, timerPaint, scoreOut, tempPoint);
+        MyDraw.drawCenter(canvas, timerPaint, scoreOut, scoreCenter);
     }
 
     @Override
@@ -48,25 +46,17 @@ public class HighScore implements GameObject {
     }
 
     public void writeHighScore(Context context){
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("score.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(highscore);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
+        SharedPreferences prefs = context.getSharedPreferences("scores", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("highscore", highscore);
+        editor.commit();
     }
 
     public void readHighScore(Context context){
-        try {
-            AssetManager am = context.getAssets();
-            InputStream is = am.open("score.txt");
-            System.out.println(is.read());
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
+
+        //getting preferences
+        SharedPreferences prefs = context.getSharedPreferences("scores", Context.MODE_PRIVATE);
+        highscore = prefs.getInt("highscore", 0); //0 is the default value
     }
 
 }

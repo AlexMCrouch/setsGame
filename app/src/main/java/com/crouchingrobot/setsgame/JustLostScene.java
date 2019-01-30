@@ -25,8 +25,7 @@ public class JustLostScene implements Scene {
         this.screenWidth = GamePanel.SCREEN_WIDTH;
         this.screenHight = GamePanel.SCREEN_HIGHT;
 
-        //hsCenter = new Point(screenWidth/4, (screenHight/19) * 2);
-        hsCenter = new Point(500,500);
+        hsCenter = new Point(screenWidth/2, (screenHight/19) * 13);
         gHscore = new HighScore(hsCenter,screenHight/23);
     }
 
@@ -59,8 +58,10 @@ public class JustLostScene implements Scene {
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(200);
-        MyDraw.drawCenter(canvas,textPaint,"DO BETTER ish", new Point(GamePanel.SCREEN_WIDTH/2,GamePanel.SCREEN_HIGHT/2));
+        MyDraw.drawCenter(canvas,textPaint,"MAKE SETS", new Point(GamePanel.SCREEN_WIDTH/2,GamePanel.SCREEN_HIGHT/6));
 
+        textPaint.setTextSize(150);
+        MyDraw.drawCenter(canvas,textPaint,"GAME OVER", new Point(GamePanel.SCREEN_WIDTH/2,GamePanel.SCREEN_HIGHT/4));
 
     }
 

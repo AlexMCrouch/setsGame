@@ -68,6 +68,7 @@ public class MainActivity extends Activity {
         //Create game view
         View gameView = new GamePanel(this,manager);
         manager.createScenes();
+        ((JustLostScene)manager.scenes.get(2)).gHscore.readHighScore(this);
 
         layout.addView(gameView);
 
@@ -112,12 +113,10 @@ public class MainActivity extends Activity {
                         //}
                     }
                 }
-                handler.postDelayed(this, 100);
                 lastScene = SceneManager.ACTIVE_SCENE;
             }
         };
 
-        ((JustLostScene)manager.scenes.get(2)).gHscore.readHighScore(this);
         handler.postDelayed(r, 100);
 
     }
