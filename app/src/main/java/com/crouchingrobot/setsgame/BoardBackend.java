@@ -203,19 +203,19 @@ public class BoardBackend {
         int temp = 0;
         switch (inColor){
             case 'P':
-                temp = Color.rgb(120,0,120);
+                temp = Color.rgb(214,0,232);
                 break;
             case 'B':
-                temp = Color.rgb(0,0,200);
+                temp = Color.rgb(0,83,255);
                 break;
             case 'R':
-                temp = Color.rgb(255,0,0);
+                temp = Color.rgb(255,87,0);
                 break;
             case 'G':
-                temp = Color.rgb(0,255,0);
+                temp = Color.rgb(0,232,97);
                 break;
             case 'Y':
-                temp = Color.rgb(255,255,0);
+                temp = Color.rgb(255,248,0);
                 break;
             case 'X':
                 //temp = Color.BLACK;

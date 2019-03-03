@@ -9,6 +9,7 @@ import android.graphics.Rect;
 public class ScoreCounter implements GameObject {
     private Point scoreCenter = null;
     private Point streakCenter = null;
+    private Point tempCenter = new Point();
     private int currentScore = 0;
     private Rect r = new Rect();
     private int currentStreak = 1;
@@ -23,6 +24,7 @@ public class ScoreCounter implements GameObject {
         this.scoreTextSize = scoreTextSize;
         this.streakCenter = streakCenter;
         this.streakTextSize = streakTextSize;
+        tempCenter.set(streakCenter.x, streakCenter.y + (streakTextSize / 2) + (streakTextSize / 2));
     }
 
     @Override
@@ -35,9 +37,7 @@ public class ScoreCounter implements GameObject {
 
         timerPaint.setTextSize(streakTextSize);
         String streakOut = "x" + currentStreak;
-        streakCenter.set(streakCenter.x, streakCenter.y + (streakTextSize / 2) + (streakTextSize / 2));
-        MyDraw.drawCenter(canvas, timerPaint, streakOut, streakCenter);
-        streakCenter.set(streakCenter.x, streakCenter.y - (streakTextSize / 2) - (streakTextSize / 2));
+        MyDraw.drawCenter(canvas, timerPaint, streakOut, tempCenter);
         MyDraw.drawCenter(canvas, timerPaint, "Streak", streakCenter);
     }
 
