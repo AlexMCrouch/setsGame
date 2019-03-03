@@ -1,5 +1,6 @@
 package com.crouchingrobot.setsgame;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,8 +16,11 @@ import com.google.android.gms.ads.AdView;
 
 public class GameActivity extends AppCompatActivity {
 
-        private SceneManager manager = new SceneManager();
-        private long backHitTime = 0;
+    private SceneManager manager = new SceneManager();
+    private long backHitTime = 0;
+    public Intent intent;
+    private RelativeLayout layout = null;
+    View gameView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +53,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Add the AdView to the view hierarchy. The view will have no size
         // until the ad is loaded.
-        final RelativeLayout layout = new RelativeLayout(this);
+        layout = new RelativeLayout(this);
         layout.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,    WindowManager.LayoutParams.MATCH_PARENT));
         // Create an ad request.
         // get test ads on a physical device.
@@ -141,16 +145,30 @@ public class GameActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         System.out.println("Resume Game");
         super.onResume();
+        manager = new SceneManager();
+        //Create game view
+        gameView = new GamePanel(this,manager);
+        manager.createScenes();
+        ((JustLostScene)manager.scenes.get(2)).gHscore.readHighScore(this);
 
+
+
+        setContentView(R.layout.activity_game_acctivity);
+        layout.requestLayout();
+        layout.addView(gameView);
+        setContentView(layout);
     }
 
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub
-        System.out.println("onPause Game");
+
         writeHighScore();
-        //System.exit(0);
+        System.out.println("onPause Game");
         super.onPause();
+        ((GamePanel)gameView).destroyThread();
+        manager = null;
+        gameView = null;
     }
 
     @Override
@@ -188,5 +206,11 @@ public class GameActivity extends AppCompatActivity {
             backHitTime = System.currentTimeMillis();
         }
 
+    }
+
+    private void backToMain(){
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

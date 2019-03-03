@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
         //String message = editText.getText().toString();
         //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+        finish();
 
     }
 
@@ -36,7 +37,7 @@ public class MainActivity extends Activity {
         // TODO Auto-generated method stub
         System.out.println("Resume Main");
         super.onResume();
-
+        startGameActivity();
     }
 
     @Override
@@ -72,6 +73,12 @@ public class MainActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         System.out.println("outState Main");
         super.onSaveInstanceState(outState);
+    }
+
+    private void startGameActivity(){
+        intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
