@@ -1,5 +1,6 @@
 package com.crouchingrobot.setsgame;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,8 +38,8 @@ public class SceneManager {
         scenes.add(1,new GameplayScene());
     }
 
-    public void createScenes(){
-        scenes.add(new MainMenuScene());
+    public void createScenes(Context context,View v){
+        scenes.add(new MainMenuScene(context,v));
         scenes.add(null);
         scenes.add(new JustLostScene());
     }

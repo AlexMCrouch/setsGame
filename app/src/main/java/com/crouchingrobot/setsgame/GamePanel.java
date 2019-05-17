@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -21,6 +22,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+
+        //turn off hardware acceleration
+        //this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     @Override

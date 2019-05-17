@@ -18,7 +18,7 @@ public class HighScore implements GameObject {
     private Point scoreCenter = null;
     private Rect r = new Rect();
     private int scoreTextSize = 200;
-    private int highscore = 0;
+    public int highscore = 0;
 
     //Pass in timer length in seconds
     public HighScore(Point scoreCenter, int scoreTextSize) {
